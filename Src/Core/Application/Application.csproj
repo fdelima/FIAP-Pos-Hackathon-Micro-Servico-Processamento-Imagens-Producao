@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<AssemblyName>FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.$(MSBuildProjectName.Replace(" ", "_"))</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="UseCases\MercadoPago\**" />
+	  <Compile Remove="UseCases\Notificacao\**" />
+	  <Compile Remove="UseCases\Pedido\**" />
+	  <EmbeddedResource Remove="UseCases\MercadoPago\**" />
+	  <EmbeddedResource Remove="UseCases\Notificacao\**" />
+	  <EmbeddedResource Remove="UseCases\Pedido\**" />
+	  <None Remove="UseCases\MercadoPago\**" />
+	  <None Remove="UseCases\Notificacao\**" />
+	  <None Remove="UseCases\Pedido\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MediatR" Version="12.4.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Domain\Domain.csproj" />
+	</ItemGroup>
+
+</Project>

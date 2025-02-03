@@ -1,0 +1,31 @@
+version: '3.4'
+
+name: fiap-pos-hackathon-micro-servico-processamento-imagens-producao-gurpo-71
+
+volumes:
+  sql_data: {}
+
+services:
+  FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.api:
+    image: fIapposhackathonmicroservicoprocessamentoimagensprincipalapi:stand-alone
+    depends_on:
+      - mongodb
+    build:
+      context: ../
+      dockerfile: Src/Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8082
+      - ASPNETCORE_HTTPS_PORTS=8083
+    ports:
+      - "8082:8082"
+      - "8083:8083"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - sql_data:/data/db
