@@ -1,5 +1,4 @@
-﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Entities;
-using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
+﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Validator;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,8 +14,6 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Applic
             //TODO: Validators :: 3 - Adicione sua configuração aqui
 
             //Validators
-            services.AddScoped(typeof(IValidator<Notificacao>), typeof(NotificacaoValidator));
-            services.AddScoped(typeof(IValidator<ProcessamentoImagem>), typeof(ProcessamentoImagemValidator));
             services.AddScoped(typeof(IValidator<ProcessamentoImagemUploadModel>), typeof(ProcessamentoImagemUploadModelValidator));
         }
     }

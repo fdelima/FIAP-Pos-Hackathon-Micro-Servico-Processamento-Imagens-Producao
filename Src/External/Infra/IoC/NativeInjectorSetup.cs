@@ -15,7 +15,6 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Infra.
         /// </summary>
         public static void RegisterInfraDependencies(this IServiceCollection services, IConfiguration configuration)
         {
-            services.RegisterDatabase(configuration);
             services.RegisterGateways();
         }
     }

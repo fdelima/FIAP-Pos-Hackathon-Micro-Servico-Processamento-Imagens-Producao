@@ -1,6 +1,5 @@
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Api;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain;
-using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.IoC;
 using Microsoft.AspNetCore.Http.Features;
 using System.Diagnostics.CodeAnalysis;
@@ -23,8 +22,6 @@ public class Program
 
         builder.Services.ConfigureModelValidations();
         builder.Services.AddSwagger("Web Api C# Sample");
-
-        builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDb"));
 
         builder.Services.RegisterDependencies(builder.Configuration);
 

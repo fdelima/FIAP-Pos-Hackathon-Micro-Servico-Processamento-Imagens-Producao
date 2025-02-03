@@ -1,5 +1,4 @@
 ﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain;
-using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Entities;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Extensions;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Messages;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
@@ -20,31 +19,6 @@ namespace TestProject.UnitTest.Domain
 
             //Assert
             Assert.Equal(expectedResult, result);
-        }
-
-        [Fact]
-        public void UtiTest()
-        {
-            //Arrange
-            const string valor = "FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Entities";
-
-            //Act
-            var result = Util.GetTypesInNamespace(valor);
-
-            //Assert
-            Assert.Contains(typeof(Notificacao), result);
-            Assert.Contains(typeof(ProcessamentoImagem), result);
-        }
-
-        [Fact]
-        public void DuplicatedResultTest()
-        {
-            //Arrange
-            //Act
-            var resut = ModelResultFactory.DuplicatedResult<ProcessamentoImagem>();
-
-            //Assert
-            Assert.Contains(BusinessMessages.DuplicatedError<ProcessamentoImagem>(), resut.ListErrors());
         }
 
         [Fact]

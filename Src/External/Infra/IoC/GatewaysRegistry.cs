@@ -10,8 +10,6 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Infra.
     {
         public static void RegisterGateways(this IServiceCollection services)
         {
-            //Repositories
-            services.AddScoped(typeof(IGateways<>), typeof(BaseGateway<>));
             services.AddScoped<IStorageGateway, AzureBlobStorageGateway>();
             services.AddScoped<IMessagerGateway, AzureQueueStorageGateway>();
         }

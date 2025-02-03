@@ -6,7 +6,7 @@
         public required string Usuario { get; set; }
         public DateTime DataEnviadoFila { get; set; }
         public required string NomeArquivo { get; set; }
-        public long TamanhoArquivo { get; set; }
+        public int TamanhoArquivo { get; set; }
         public required string NomeArquivoZipDownload { get; set; }
     }
 }

@@ -26,28 +26,9 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Api
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var _processamentoImagemController = scope.ServiceProvider.GetRequiredService<IProcessamentoImagemController>();
-                    await Sender(_processamentoImagemController, stoppingToken);
                     await Receiver(_processamentoImagemController, stoppingToken);
                 }
             }
-        }
-
-        private static async Task Sender(IProcessamentoImagemController _processamentoImagemController, CancellationToken stoppingToken)
-        {
-
-            try
-            {
-                Console.WriteLine("Worker Send Service executando...");
-                var result = await _processamentoImagemController.SendMessageToQueueAsync();
-                Console.WriteLine(JsonSerializer.Serialize(result));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Ops! Worker Send Service: " + ex.Message);
-            }
-
-            Console.WriteLine("Worker Send Service aguardando...");
-            await Task.Delay(TimeSpan.FromSeconds(60), stoppingToken);
         }
 
         private static async Task Receiver(IProcessamentoImagemController _processamentoImagemController, CancellationToken stoppingToken)
