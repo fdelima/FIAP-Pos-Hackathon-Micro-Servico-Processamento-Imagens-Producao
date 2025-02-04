@@ -33,9 +33,6 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Api
 
         private static async Task Receiver(IProcessamentoImagemController _processamentoImagemController, CancellationToken stoppingToken)
         {
-            Console.WriteLine("Worker Receiver Service aguardando...");
-            await Task.Delay(TimeSpan.FromSeconds(60), stoppingToken);
-
             try
             {
                 Console.WriteLine("Worker Receiver Service executando...");
@@ -48,7 +45,8 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Api
                 Console.WriteLine("Ops! Worker Receiver Service: " + ex.Message);
             }
 
+            Console.WriteLine("Worker Receiver Service aguardando...");
+            await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
         }
     }
-
 }

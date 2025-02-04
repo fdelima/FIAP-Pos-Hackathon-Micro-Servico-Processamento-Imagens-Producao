@@ -1,4 +1,5 @@
 ﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Interfaces;
+using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
 
 namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Services
 {
@@ -10,7 +11,13 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
         {
             _messagerGateway = messagerGateway;
         }
-        public Task<string> ReceiveMessagesAsync()
+
+        public Task DeleteMessageAsync(MessageModel message)
+        {
+            return _messagerGateway.DeleteMessageAsync(message);
+        }
+      
+        public Task<MessageModel> ReceiveMessageAsync()
         {
             return _messagerGateway.ReceiveMessagesAsync();
         }

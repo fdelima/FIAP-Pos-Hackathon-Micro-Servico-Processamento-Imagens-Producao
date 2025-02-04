@@ -21,38 +21,42 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
         /// </summary>
         public async Task<ModelResult> ReceiverMessageInQueueAsync()
         {
-            var result = new ModelResult();
+            var result = ModelResultFactory.SucessResult();
 
-            var messagesBody = await _messagerService.ReceiveMessagesAsync();
+            var message = await _messagerService.ReceiveMessageAsync();
 
             try
             {
-                var msgReceive = JsonSerializer.Deserialize<ProcessamentoImagemSendQueueModel>(messagesBody);
-
-                //inicio do processamento
-                var msg = new ProcessamentoImagemProcessModel
+                result = ModelResultFactory.SucessResult();
+                if (message != null)
                 {
-                    IdProcessamentoImagem = msgReceive.IdProcessamentoImagem,
-                    Usuario = msgReceive.Usuario,
-                    DataInicioProcessamento = DateTime.Now,
-                    NomeArquivo = msgReceive.NomeArquivo,
-                    TamanhoArquivo = msgReceive.TamanhoArquivo,
-                    NomeArquivoZipDownload = msgReceive.NomeArquivoZipDownload
-                };
-                await SendMessageToQueueAsync(msg);
+                    var msgReceive = JsonSerializer.Deserialize<ProcessamentoImagemSendQueueModel>(message.MessageText);
 
-                //TODO: iniciar trabalho
-                Thread.Sleep(10000);
+                    //inicio do processamento
+                    var msg = new ProcessamentoImagemProcessModel
+                    {
+                        IdProcessamentoImagem = msgReceive.IdProcessamentoImagem,
+                        Usuario = msgReceive.Usuario,
+                        DataInicioProcessamento = DateTime.Now,
+                        NomeArquivo = msgReceive.NomeArquivo,
+                        TamanhoArquivo = msgReceive.TamanhoArquivo,
+                        NomeArquivoZipDownload = msgReceive.NomeArquivoZipDownload
+                    };
 
-                //Fim do processamento
-                msg.DataFimProcessamento = DateTime.Now;
-                await SendMessageToQueueAsync(msg);
+                    //TODO: iniciar trabalho
+                    Thread.Sleep(3000);
 
-                result = ModelResultFactory.SucessResult(msgReceive);
+                    //Fim do processamento
+                    msg.DataFimProcessamento = DateTime.Now;
+                    await SendMessageToQueueAsync(msg);
+                    await _messagerService.DeleteMessageAsync(message);
+
+                    result = ModelResultFactory.SucessResult(msgReceive);
+                }
             }
             catch (Exception ex)
             {
-                result.AddError($"{messagesBody} {ex.Message}");
+                result.AddError($"{message.MessageText} {ex.Message}");
             }
 
             return result;

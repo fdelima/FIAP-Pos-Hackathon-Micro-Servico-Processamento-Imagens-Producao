@@ -8,7 +8,7 @@
       "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/api-docs",
       "serviceActions": {
         "FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.api": "StartDebugging",
-        "mongodb": "StartWithoutDebugging"
+        //"mongodb": "StartWithoutDebugging"
       }
     }
   }
