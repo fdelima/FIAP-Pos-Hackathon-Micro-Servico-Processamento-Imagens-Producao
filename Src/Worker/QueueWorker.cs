@@ -10,10 +10,10 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Api
     /// <see cref="https://microservices.io/patterns/data/transactional-outbox.html"/>
     /// <see cref="https://learn.microsoft.com/pt-br/azure/architecture/patterns/saga#choreography"/>
     /// </summary>
-    public class SendQueueWorker : BackgroundService
+    public class QueueWorker : BackgroundService
     {
         IServiceProvider _serviceProvider;
-        public SendQueueWorker(IServiceProvider sp)
+        public QueueWorker(IServiceProvider sp)
         {
             _serviceProvider = sp;
         }

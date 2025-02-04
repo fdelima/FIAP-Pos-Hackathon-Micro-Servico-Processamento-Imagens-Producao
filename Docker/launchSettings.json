@@ -3,12 +3,8 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
-      "composeLaunchAction": "LaunchBrowser",
-      "composeLaunchServiceName": "FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.api",
-      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/api-docs",
       "serviceActions": {
-        "FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.api": "StartDebugging",
-        //"mongodb": "StartWithoutDebugging"
+        "FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Worker": "StartDebugging"
       }
     }
   }

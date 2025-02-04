@@ -46,7 +46,7 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Api
         /// </summary>
         internal static ILogger CreateLogger()
         {
-            return new Logger<WebApplication>(LoggerFactory.Create(x => x.AddConsole()));
+            return new Logger<IHost>(LoggerFactory.Create(x => x.AddConsole()));
         }
     }
 }
