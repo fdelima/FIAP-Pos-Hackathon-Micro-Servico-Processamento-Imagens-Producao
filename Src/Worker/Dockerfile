@@ -1,7 +1,13 @@
 #See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
+USER root
+RUN mkdir -p /app/temp && chown app:app /app/temp
+RUN apt-get update && apt-get install -y ffmpeg
+RUN ffmpeg -version
+RUN echo "FFmpeg version:" && ffmpeg -version > /app/temp/ffmpeg_version.txt
 USER app
+
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -24,4 +30,7 @@ RUN dotnet publish "./FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Pro
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+
+
 ENTRYPOINT ["dotnet", "FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Worker.dll"]

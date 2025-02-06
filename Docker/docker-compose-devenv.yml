@@ -2,7 +2,7 @@ version: '3.4'
 
 volumes:
   sql_data: {}
-  azurite_data: {}
+  worker_data: {}
 
 services:
   FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Worker:
@@ -13,6 +13,8 @@ services:
     build:
       context: ../
       dockerfile: Src/Worker/Dockerfile
+    volumes:
+      - worker_data:/app/temp
   # mongodb:
   #   image: mongo:latest
   #   ports:

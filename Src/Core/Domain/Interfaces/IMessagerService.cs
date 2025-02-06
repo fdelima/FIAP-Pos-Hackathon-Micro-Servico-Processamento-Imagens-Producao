@@ -6,7 +6,7 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
     public interface IMessagerService
     {
         Task DeleteMessageAsync(MessageModel message);
-        Task<MessageModel> ReceiveMessageAsync();
+        Task<MessageModel?> ReceiveMessageAsync();
         Task SendMessageAsync(string messageBody);
     }
 }
