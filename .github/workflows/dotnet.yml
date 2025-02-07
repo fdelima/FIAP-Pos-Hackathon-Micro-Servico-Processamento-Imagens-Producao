@@ -2,13 +2,13 @@ name: Docker Image api CI
 
 on:
   push:
-    branches: [ "main", "develop2" ]
+    branches: [ "main", "develop" ]
 
 jobs:
 
   build:
 
-    name: Build api
+    name: Build worker
     runs-on: ubuntu-latest
 
     steps:
@@ -49,7 +49,7 @@ jobs:
       uses: docker/build-push-action@v6.7.0
       with:
         context: ./
-        file: ./Src/Api/Dockerfile
-        tags: ${{ secrets.DOCKER_USERNAME }}/FIAP-Pos-Hackathon-Micro-Servico-Processamento-Imagens-Producao-gurpo-71-api:fase5
+        file: ./Src/Worker/Dockerfile
+        tags: ${{ secrets.DOCKER_USERNAME }}/fiap-pos-hackathon-micro-servico-processamento-imagens-producao-gurpo-71-worker:fase5
         push: true
 

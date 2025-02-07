@@ -2,18 +2,18 @@ using System.Net.Http.Headers;
 
 namespace TestProject.Infra
 {
-    public class ApiTestFixture : IDisposable
+    public class WorkerTestFixture : IDisposable
     {
         const string port = "5000";
         const string network = "network-pagamento-test";
 
         //api
-        private const string ImageName = "fdelima/FIAP-Pos-Hackathon-Micro-Servico-Processamento-Imagens-Producao-gurpo-71-api:fase5";
+        private const string ImageName = "fdelima/fiap-pos-hackathon-micro-servico-processamento-imagens-producao-gurpo-71-worker:fase5";
         private const string DatabaseContainerName = "api-pagamento-test";
         private const string DataBaseName = "hackathon-microservico-processamento-imagens-producao-grupo-71";
         private HttpClient _client;
 
-        public ApiTestFixture()
+        public WorkerTestFixture()
         {
             if (DockerManager.UseDocker())
             {

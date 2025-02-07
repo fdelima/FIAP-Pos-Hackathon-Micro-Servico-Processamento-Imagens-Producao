@@ -2,13 +2,13 @@
 {
     public class ComponentTestsBase : IDisposable
     {
-        internal readonly ApiTestFixture _apiTest;
+        internal readonly WorkerTestFixture _apiTest;
         private static int _tests = 0;
 
         public ComponentTestsBase()
         {
             _tests += 1;
-            _apiTest = new ApiTestFixture();
+            _apiTest = new WorkerTestFixture();
             Thread.Sleep(15000);
         }
 
