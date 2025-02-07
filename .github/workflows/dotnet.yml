@@ -1,4 +1,4 @@
-name: Docker Image api CI
+name: Docker Image worker CI
 
 on:
   push:
