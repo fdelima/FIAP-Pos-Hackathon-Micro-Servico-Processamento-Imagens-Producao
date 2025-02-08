@@ -111,7 +111,7 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
             return tempVideoPath;
         }
 
-        private int GetVideoDuration(string tempVideoPath)
+        private double GetVideoDuration(string tempVideoPath)
         {
             var durationProcess = new Process
             {
@@ -125,16 +125,16 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
                 }
             };
             durationProcess.Start();
-            var duration = (int)double.Parse(durationProcess.StandardOutput.ReadToEnd());
+            var duration = double.Parse(durationProcess.StandardOutput.ReadToEnd());
             durationProcess.WaitForExit();
-            
+
             return duration;
         }
 
-        private void CaptureFrames(ProcessamentoImagemSendQueueModel msgReceive, string tempPath, string tempVideoPath, int duration)
+        private void CaptureFrames(ProcessamentoImagemSendQueueModel msgReceive, string tempPath, string tempVideoPath, double duration)
         {
             // Define o intervalo de captura
-            var intervalo = duration >= 10 ? duration / 10 : 1;
+            var intervalo = duration >= 10 ? (int)Math.Round(duration / 10) : 1;
 
             // Loop para capturar e processar os frames
             for (int i = 0; i < duration; i += intervalo)
@@ -163,7 +163,9 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
 
         private async Task CreateZipFile(ProcessamentoImagemSendQueueModel msgReceive, string tempPath)
         {
-            using (FileStream zipFileStream = new FileStream(msgReceive.NomeArquivoZipDownload, FileMode.Create))
+            var localZipPath = $"/app/temp/{msgReceive.NomeArquivoZipDownload}";
+
+            using (FileStream zipFileStream = new FileStream(localZipPath, FileMode.Create))
             {
                 ZipFile.CreateFromDirectory(tempPath, zipFileStream);
                 await _storageService.UploadFileAsync(Constants.BLOB_CONTAINER_NAME, msgReceive.NomeArquivoZipDownload, zipFileStream);
@@ -171,6 +173,8 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
 
             if (Directory.Exists(tempPath))
                 Directory.Delete(tempPath, true);
+
+            File.Delete(localZipPath);
         }
     }
 }
