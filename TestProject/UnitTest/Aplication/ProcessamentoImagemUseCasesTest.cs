@@ -41,7 +41,25 @@ namespace TestProject.UnitTest.Aplication
         [Fact]
         public async Task SendMessageToQueueAsyncTest()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var processModel = new ProcessamentoImagemProcessModel
+            {
+                IdProcessamentoImagem = Guid.NewGuid(),
+                Usuario = "TesteUsuario",
+                DataInicioProcessamento = DateTime.Now,
+                NomeArquivo = "teste.jpg",
+                TamanhoArquivo = 1024,
+                NomeArquivoZipDownload = "teste.zip"
+            };
+
+            _service.SendMessageToQueueAsync(Arg.Any<ProcessamentoImagemProcessModel>())
+                .Returns(Task.FromResult(ModelResultFactory.SucessResult(processModel)));
+
+            // Act
+            var result = await _service.SendMessageToQueueAsync(processModel);
+
+            // Assert
+            Assert.True(result.IsValid);
         }
     }
 }

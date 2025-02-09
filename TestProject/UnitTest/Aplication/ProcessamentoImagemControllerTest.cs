@@ -1,4 +1,6 @@
-﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Interfaces;
+﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Application.Controllers;
+using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Application.UseCases.ProcessamentoImagem.Commands;
+using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Interfaces;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Validator;
 using FluentValidation;
@@ -26,7 +28,18 @@ namespace TestProject.UnitTest.Aplication
         [Fact]
         public async Task ReceiverMessageInQueueAsyncTest()
         {
-            throw new NotImplementedException();
+            // Arrange
+            var controller = new ProcessamentoImagemController(_mediator, _storageService, _uploadValidator);
+            var expectedResult = ModelResultFactory.SucessResult();
+            _mediator.Send(Arg.Any<ProcessamentoImagemReceiverMessageInQueueCommand>())
+                .Returns(Task.FromResult(expectedResult));
+
+            // Act
+            var result = await controller.ReceiverMessageInQueueAsync();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.True(result.IsValid);
         }
     }
 }
