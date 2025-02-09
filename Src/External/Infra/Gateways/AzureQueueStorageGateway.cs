@@ -28,7 +28,7 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Infra.
             await _queueReceiverClient.DeleteMessageAsync(message.MessageId, message.PopReceipt);
         }
 
-        public async Task<MessageModel?> ReceiveMessagesAsync()
+        public async Task<MessageModel?> ReceiveMessageAsync()
         {
             QueueMessage message = await _queueReceiverClient.ReceiveMessageAsync();
 

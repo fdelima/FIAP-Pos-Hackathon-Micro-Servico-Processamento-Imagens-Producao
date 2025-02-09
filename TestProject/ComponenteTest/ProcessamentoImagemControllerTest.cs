@@ -13,7 +13,6 @@ namespace TestProject.ComponenteTest
     [FeatureFile("./BDD/Features/ControlarProcessamentoImagens.feature")]
     public class ProcessamentoImagemControllerTest : Feature, IClassFixture<ComponentTestsBase>
     {
-        private readonly WorkerTestFixture _workerTest;
         private ModelResult expectedResult;
         ProcessamentoImagemUploadModel _ProcessamentoImagemUpload;
 
@@ -22,7 +21,6 @@ namespace TestProject.ComponenteTest
         /// </summary>
         public ProcessamentoImagemControllerTest(ComponentTestsBase data)
         {
-            _workerTest = data._apiTest;
         }
         private class ActionResult
         {
@@ -32,119 +30,37 @@ namespace TestProject.ComponenteTest
             public bool IsValid { get; set; }
         }
 
-        [Given(@"Recebendo um ProcessamentoImagem")]
+        [Given(@"Prepando um ProcessamentoImagem")]
         public void PrepararProcessamentoImagem()
         {
-            _ProcessamentoImagemUpload = new ProcessamentoImagemUploadModel
+            var msgSendModel = new ProcessamentoImagemSendQueueModel
             {
-                Data = DateTime.Now,
-                Usuario = "fiap@tech.com",
-                FormFile = new FormFile(
-                    baseStream: new MemoryStream(Encoding.UTF8.GetBytes("conteúdo do arquivo")),
-                    baseStreamOffset: 0,
-                    length: Encoding.UTF8.GetBytes("conteúdo do arquivo").Length,
-                    name: "file",
-                    fileName: "teste.txt"
-                )
+                IdProcessamentoImagem = Guid.NewGuid(),
+                Usuario = "usuario_teste",
+                NomeArquivo = "video_test.mp4",
+                TamanhoArquivo = 1024,
+                NomeArquivoZipDownload = "frames.zip"
             };
 
         }
 
-        [And(@"Adicionar o ProcessamentoImagem")]
-        public async Task AdicionarProcessamentoImagem()
+        [And(@"Enviar o ProcessamentoImagem")]
+        public async Task SendProcessamentoImagem()
         {
-            expectedResult = ModelResultFactory.InsertSucessResult<ProcessamentoImagemUploadModel>(_ProcessamentoImagemUpload);
-
-            var client = _workerTest.GetClient();
-            client.Timeout = TimeSpan.FromMinutes(5);
-
-            var filePath = "video_test.mp4";
-            var fileBytes = File.ReadAllBytes(filePath);
-            var fileContent = new ByteArrayContent(fileBytes);
-            fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("video/mp4");
-
-            var conteudo = new MultipartFormDataContent();
-            conteudo.Add(fileContent, "FormFile", "video_test.mp4");
-            conteudo.Add(new StringContent(_ProcessamentoImagemUpload.Data.ToString("o")), "Data");
-            conteudo.Add(new StringContent(_ProcessamentoImagemUpload.Usuario), "Usuario");
-
-            HttpResponseMessage response = await client.PostAsync("api/ProcessamentoImagem", conteudo);
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var actualResult = JsonConvert.DeserializeObject<ActionResult>(responseContent);
-            _ProcessamentoImagemUpload = actualResult.Model;
-
-            Assert.Equal(expectedResult.IsValid, actualResult.IsValid);
-            Assert.Equal(expectedResult.Messages, actualResult.Messages);
-            Assert.Equal(expectedResult.Errors, actualResult.Errors);
+            throw new NotImplementedException();
         }
 
-        [And(@"Encontrar o ProcessamentoImagem")]
-        public async Task EncontrarProcessamentoImagem()
+        [When(@"Receber o ProcessamentoImagem")]
+        public async Task ReceiverProcessamentoImagem()
         {
-            expectedResult = ModelResultFactory.SucessResult(_ProcessamentoImagemUpload);
-
-            var client = _workerTest.GetClient();
-            HttpResponseMessage response = await client.GetAsync(
-                $"api/ProcessamentoImagem/{_ProcessamentoImagemUpload.Data}");
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var actualResult = JsonConvert.DeserializeObject<ActionResult>(responseContent);
-            _ProcessamentoImagemUpload = actualResult.Model;
-
-            Assert.Equal(expectedResult.IsValid, actualResult.IsValid);
-            Assert.Equal(expectedResult.Messages, actualResult.Messages);
-            Assert.Equal(expectedResult.Errors, actualResult.Errors);
-        }
-
-        [And(@"Alterar o ProcessamentoImagem")]
-        public async Task AlterarProcessamentoImagem()
-        {
-            expectedResult = ModelResultFactory.UpdateSucessResult<ProcessamentoImagemUploadModel>(_ProcessamentoImagemUpload);
-
-            var client = _workerTest.GetClient();
-            HttpResponseMessage response = await client.PutAsJsonAsync(
-                $"api/ProcessamentoImagem/{_ProcessamentoImagemUpload.Data}", _ProcessamentoImagemUpload);
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var actualResult = JsonConvert.DeserializeObject<ActionResult>(responseContent);
-            _ProcessamentoImagemUpload = actualResult.Model;
-
-            Assert.Equal(expectedResult.IsValid, actualResult.IsValid);
-            Assert.Equal(expectedResult.Messages, actualResult.Messages);
-            Assert.Equal(expectedResult.Errors, actualResult.Errors);
-        }
-
-        [When(@"Consultar o ProcessamentoImagem")]
-        public async Task ConsultarProcessamentoImagem()
-        {
-            var client = _workerTest.GetClient();
-            HttpResponseMessage response = await client.PostAsJsonAsync(
-                $"api/ProcessamentoImagem/consult", _ProcessamentoImagemUpload);
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            dynamic actualResult = JsonConvert.DeserializeObject(responseContent);
-
-            Assert.True(actualResult.content != null);
+            throw new NotImplementedException();
         }
 
 
         [Then(@"posso deletar o ProcessamentoImagem")]
         public async Task DeletarProcessamentoImagem()
         {
-            expectedResult = ModelResultFactory.DeleteSucessResult<ProcessamentoImagemUploadModel>();
-
-            var client = _workerTest.GetClient();
-            HttpResponseMessage response = await client.DeleteAsync(
-                $"api/ProcessamentoImagem/{_ProcessamentoImagemUpload.Data}");
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var actualResult = JsonConvert.DeserializeObject<ActionResult>(responseContent);
-            _ProcessamentoImagemUpload = null;
-
-            Assert.Equal(expectedResult.IsValid, actualResult.IsValid);
-            Assert.Equal(expectedResult.Messages, actualResult.Messages);
-            Assert.Equal(expectedResult.Errors, actualResult.Errors);
+            throw new NotImplementedException();
         }
     }
 }

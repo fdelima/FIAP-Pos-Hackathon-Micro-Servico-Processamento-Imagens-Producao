@@ -1,8 +1,8 @@
-﻿using System.Text.Json;
-using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Interfaces;
+﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Interfaces;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Services;
 using NSubstitute;
+using System.Text.Json;
 
 namespace TestProject.UnitTest.Domain
 {
@@ -42,7 +42,7 @@ namespace TestProject.UnitTest.Domain
             _messagerService.DeleteMessageAsync(Arg.Any<MessageModel>()).Returns(Task.CompletedTask);
             _storageService.DownloadFileAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>()).Returns(Task.CompletedTask);
             _storageService.UploadFileAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<Stream>()).Returns(Task.CompletedTask);
-           
+
             // Act
             var result = await _service.ReceiverMessageInQueueAsync();
 

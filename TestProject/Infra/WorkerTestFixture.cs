@@ -1,59 +1,39 @@
-using System.Net.Http.Headers;
-
 namespace TestProject.Infra
 {
     public class WorkerTestFixture : IDisposable
     {
-        const string port = "5000";
-        const string network = "network-pagamento-test";
-
-        //api
-        private const string ImageName = "fdelima/fiap-pos-hackathon-micro-servico-processamento-imagens-producao-gurpo-71-worker:fase5";
-        private const string DatabaseContainerName = "api-pagamento-test";
-        private const string DataBaseName = "hackathon-microservico-processamento-imagens-producao-grupo-71";
-        private HttpClient _client;
+        private const string _imageName = "fdelima/fiap-pos-hackathon-micro-servico-processamento-imagens-producao-gurpo-71-worker:fase5";
+        private const string _databaseContainerName = "worker-producao-test";
 
         public WorkerTestFixture()
         {
             if (DockerManager.UseDocker())
             {
-                if (!DockerManager.ContainerIsRunning(DatabaseContainerName))
+                if (!DockerManager.ContainerIsRunning(_databaseContainerName))
                 {
-                    DockerManager.PullImageIfDoesNotExists(ImageName);
-                    DockerManager.KillContainer(DatabaseContainerName);
-                    DockerManager.KillVolume(DatabaseContainerName);
+                    DockerManager.PullImageIfDoesNotExists(_imageName);
+                    DockerManager.KillContainer(_databaseContainerName);
+                    DockerManager.KillVolume(_databaseContainerName);
 
-                    DockerManager.CreateNetWork(network);
+                    DockerManager.CreateNetWork();
 
-                    DockerManager.RunContainerIfIsNotRunning(DatabaseContainerName,
-                        $"run --name {DatabaseContainerName} " +
+                    DockerManager.RunContainerIfIsNotRunning(_databaseContainerName,
+                        $"run --name {_databaseContainerName} " +
                         $"-e ASPNETCORE_ENVIRONMENT=Test " +
-                        $"-p {port}:8082 " +
-                        $"--network {network} " +
-                        $"-d {ImageName}");
+                        $"--network {DockerManager.NETWORK} " +
+                        $"-d {_imageName}");
 
                     Thread.Sleep(3000);
                 }
             }
         }
 
-        public HttpClient GetClient()
-        {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri($"http://localhost:{port}/");
-            _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
-            return _client;
-        }
-
         public void Dispose()
         {
             if (DockerManager.UseDocker())
             {
-                DockerManager.KillContainer(DatabaseContainerName);
-                DockerManager.KillVolume(DatabaseContainerName);
+                DockerManager.KillContainer(_databaseContainerName);
+                DockerManager.KillVolume(_databaseContainerName);
             }
             GC.SuppressFinalize(this);
         }

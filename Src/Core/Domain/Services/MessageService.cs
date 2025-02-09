@@ -19,7 +19,7 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
 
         public Task<MessageModel?> ReceiveMessageAsync()
         {
-            return _messagerGateway.ReceiveMessagesAsync();
+            return _messagerGateway.ReceiveMessageAsync();
         }
 
         public Task SendMessageAsync(string messageBody)

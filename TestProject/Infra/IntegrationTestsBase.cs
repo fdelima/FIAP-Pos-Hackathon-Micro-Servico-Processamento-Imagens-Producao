@@ -7,6 +7,7 @@
         public IntegrationTestsBase()
         {
             _tests += 1;
+
             Thread.Sleep(15000);
         }
 
@@ -15,7 +16,6 @@
             _tests -= 1;
             if (_tests == 0)
             {
-
             }
         }
     }

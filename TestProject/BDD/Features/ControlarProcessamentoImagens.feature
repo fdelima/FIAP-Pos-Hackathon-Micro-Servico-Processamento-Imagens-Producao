@@ -1,15 +1,12 @@
 Feature: ControlarProcessamentoImagens
 	Para controlar os ProcessamentoImagens
 	Eu preciso das seguindes funcionalidades
-	Adicionar um ProcessamentoImagem
-	Alterar um ProcessamentoImagem
-	Consultar um ProcessamentoImagem
+	Enviar um ProcessamentoImagem
+	Receber um ProcessamentoImagem
 	Deletar um ProcessamentoImagem
 
 Scenario: Controlar ProcessamentoImagem
-	Given Recebendo um ProcessamentoImagem
-	And Adicionar o ProcessamentoImagem
-	And Encontrar o ProcessamentoImagem
-	And Alterar o ProcessamentoImagem
-	When Consultar o ProcessamentoImagem
+	Given Prepando um ProcessamentoImagem
+	And Enviar o ProcessamentoImagem
+	When Receber o ProcessamentoImagem
 	Then posso deletar o ProcessamentoImagem
