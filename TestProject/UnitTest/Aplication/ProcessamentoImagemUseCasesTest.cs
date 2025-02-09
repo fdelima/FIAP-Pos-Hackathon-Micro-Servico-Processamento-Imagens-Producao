@@ -20,7 +20,7 @@ namespace TestProject.UnitTest.Aplication
         }
 
         [Fact]
-        public async Task ReceiverMessageInQueueAsync()
+        public async Task ReceiverMessageInQueueAsyncTest()
         {
             //Arrange
             var command = new ProcessamentoImagemReceiverMessageInQueueCommand();
@@ -35,6 +35,13 @@ namespace TestProject.UnitTest.Aplication
 
             //Assert
             Assert.True(result.IsValid);
+        }
+
+
+        [Fact]
+        public async Task SendMessageToQueueAsyncTest()
+        {
+            throw new NotImplementedException();
         }
     }
 }
