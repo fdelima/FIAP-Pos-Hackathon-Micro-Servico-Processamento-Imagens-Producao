@@ -1,9 +1,7 @@
 ﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Interfaces;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
 using System.Text.Json;
-using System;
 using System.Diagnostics;
-using System.IO;
 using System.IO.Compression;
 
 namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Services
@@ -48,7 +46,6 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
                         NomeArquivoZipDownload = msgReceive.NomeArquivoZipDownload
                     };
 
-                    //TODO: iniciar trabalho
                     await ExecuteProcess(msgReceive);
 
 
