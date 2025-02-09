@@ -16,7 +16,7 @@ namespace TestProject.UnitTest.Domain
         {
             _messagerService = Substitute.For<IMessagerService>();
             _storageService = Substitute.For<IStorageService>();
-            _service = new ProcessamentoImagemService(_messagerService, _storageService);
+            _service = new ProcessamentoImagemService(_messagerService, _storageService, true);
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace TestProject.UnitTest.Domain
             {
                 IdProcessamentoImagem = Guid.NewGuid(),
                 Usuario = "usuario_teste",
-                NomeArquivo = "video.mp4",
+                NomeArquivo = "video_test.mp4",
                 TamanhoArquivo = 1024,
                 NomeArquivoZipDownload = "frames.zip"
             };
@@ -37,11 +37,12 @@ namespace TestProject.UnitTest.Domain
                 MessageText = JsonSerializer.Serialize(msgModel)
             };
 
+            //MOCK
             _messagerService.ReceiveMessageAsync().Returns(Task.FromResult(message));
             _messagerService.DeleteMessageAsync(Arg.Any<MessageModel>()).Returns(Task.CompletedTask);
             _storageService.DownloadFileAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>()).Returns(Task.CompletedTask);
             _storageService.UploadFileAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<Stream>()).Returns(Task.CompletedTask);
-
+           
             // Act
             var result = await _service.ReceiverMessageInQueueAsync();
 

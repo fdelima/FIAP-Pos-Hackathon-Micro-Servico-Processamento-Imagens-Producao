@@ -1,6 +1,4 @@
-﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain;
-using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Extensions;
-using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Messages;
+﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Extensions;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
 
 namespace TestProject.UnitTest.Domain

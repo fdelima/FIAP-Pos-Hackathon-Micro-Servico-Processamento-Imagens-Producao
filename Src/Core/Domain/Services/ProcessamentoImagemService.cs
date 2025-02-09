@@ -1,8 +1,8 @@
 ﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Interfaces;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
-using System.Text.Json;
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Text.Json;
 
 namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Services
 {
@@ -10,14 +10,16 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
     {
         protected readonly IMessagerService _messagerService;
         protected readonly IStorageService _storageService;
+        protected readonly bool _isTestProject = false;
 
         /// <summary>
         /// Lógica de negócio referentes ao pedido.
         /// </summary>
-        public ProcessamentoImagemService(IMessagerService messagerService, IStorageService storageService)
+        public ProcessamentoImagemService(IMessagerService messagerService, IStorageService storageService, bool isTestProject = false)
         {
             _messagerService = messagerService;
             _storageService = storageService;
+            _isTestProject = isTestProject;
         }
 
         /// <summary>
@@ -46,8 +48,8 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
                         NomeArquivoZipDownload = msgReceive.NomeArquivoZipDownload
                     };
 
-                    await ExecuteProcess(msgReceive);
-
+                    if (!_isTestProject)
+                        await ExecuteProcess(msgReceive);
 
                     //Fim do processamento
                     msg.DataFimProcessamento = DateTime.Now;

@@ -31,7 +31,7 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Infra.
         public async Task<MessageModel?> ReceiveMessagesAsync()
         {
             QueueMessage message = await _queueReceiverClient.ReceiveMessageAsync();
-            
+
             if (message == null) return null;
 
             return new MessageModel

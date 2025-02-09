@@ -1,7 +1,5 @@
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Api;
-using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.IoC;
-using Microsoft.AspNetCore.Http.Features;
 using System.Diagnostics.CodeAnalysis;
 
 [ExcludeFromCodeCoverage(Justification = "Arquivo de configuração")]
