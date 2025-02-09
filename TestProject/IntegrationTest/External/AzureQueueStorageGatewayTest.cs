@@ -50,7 +50,7 @@ namespace TestProject.IntegrationTest.External
         {
             // Arrange
             string messageBody = "Test message";
-            var queueClient = new QueueClient("UseDevelopmentStorage=true", _queueProcessedName);
+            var queueClient = new QueueClient("UseDevelopmentStorage=true", _queueToProcessName);
             await queueClient.SendMessageAsync(messageBody);
 
             // Act
@@ -66,10 +66,9 @@ namespace TestProject.IntegrationTest.External
         {
             // Arrange
             string messageBody = "Test message";
-            var queueClient = new QueueClient("UseDevelopmentStorage=true", _queueProcessedName);
+            var queueClient = new QueueClient("UseDevelopmentStorage=true", _queueToProcessName);
             await queueClient.SendMessageAsync(messageBody);
 
-            // Act
             var receivedMessage = await _messagerGateway.ReceiveMessageAsync();
             Assert.NotNull(receivedMessage); // Garante que a mensagem foi recebida
             Assert.Equal(messageBody, receivedMessage.MessageText);
