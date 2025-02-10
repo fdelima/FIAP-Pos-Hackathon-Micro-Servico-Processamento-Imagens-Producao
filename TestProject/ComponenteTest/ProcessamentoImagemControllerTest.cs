@@ -67,7 +67,8 @@ namespace TestProject.ComponenteTest
             await _messagerGateway.SendMessageAsync(messageBody);
 
             //Aguardando o worker fazer o trabalho
-            Thread.Sleep(1000 * 45);
+            Console.WriteLine("Agauardando...");
+            Thread.Sleep(1000 * 30);
 
             Assert.True(FileExistsInStorageAsync(Constants.BLOB_CONTAINER_NAME, _msgSendModel.NomeArquivoZipDownload));
         }
@@ -77,6 +78,8 @@ namespace TestProject.ComponenteTest
             var blobServiceClient = new BlobServiceClient(_conn);
             var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
             var blobClient = containerClient.GetBlobClient(fileName);
+
+            Console.WriteLine($"blobClient != null :: {blobClient != null}");
 
             return blobClient != null;
         }
