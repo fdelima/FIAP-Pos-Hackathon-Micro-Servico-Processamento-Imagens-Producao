@@ -46,6 +46,8 @@ namespace TestProject.UnitTest.Domain
             // Act
             var result = await _service.ReceiverMessageInQueueAsync();
 
+            Console.WriteLine(result);
+
             // Assert
             Assert.True(result.IsValid);
         }
