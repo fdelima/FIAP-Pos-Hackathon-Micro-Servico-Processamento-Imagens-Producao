@@ -48,7 +48,8 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
                         NomeArquivoZipDownload = msgReceive.NomeArquivoZipDownload
                     };
 
-                    await ExecuteProcess(msgReceive);
+                    if (!_isTestProject)
+                        await ExecuteProcess(msgReceive);
 
                     //Fim do processamento
                     msg.DataFimProcessamento = DateTime.Now;
@@ -123,8 +124,6 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
                 }
             };
 
-            if (_isTestProject)
-                return 1.0;
 
             durationProcess.Start();
             var duration = double.Parse(durationProcess.StandardOutput.ReadToEnd());
@@ -159,11 +158,8 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
                     }
                 };
 
-                if (!_isTestProject)
-                {
-                    ffmpegProcess.Start();
-                    ffmpegProcess.WaitForExit();
-                }
+                ffmpegProcess.Start();
+                ffmpegProcess.WaitForExit();
             }
         }
 
@@ -171,18 +167,16 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
         {
             var localZipPath = $"/app/temp/{msgReceive.NomeArquivoZipDownload}";
 
-            if (!_isTestProject)
-                using (FileStream zipFileStream = new FileStream(localZipPath, FileMode.Create))
-                {
-                    ZipFile.CreateFromDirectory(tempPath, zipFileStream);
-                    await _storageService.UploadFileAsync(Constants.BLOB_CONTAINER_NAME, msgReceive.NomeArquivoZipDownload, zipFileStream);
-                }
+            using (FileStream zipFileStream = new FileStream(localZipPath, FileMode.Create))
+            {
+                ZipFile.CreateFromDirectory(tempPath, zipFileStream);
+                await _storageService.UploadFileAsync(Constants.BLOB_CONTAINER_NAME, msgReceive.NomeArquivoZipDownload, zipFileStream);
+            }
 
             if (Directory.Exists(tempPath))
                 Directory.Delete(tempPath, true);
 
-            if (!_isTestProject)
-                File.Delete(localZipPath);
+            File.Delete(localZipPath);
         }
     }
 }
