@@ -7,7 +7,7 @@ using TestProject.Infra;
 
 namespace TestProject.IntegrationTest.External
 {
-    public class AzureBlobStorageGatewayTest : IClassFixture<IntegrationTestsBase>
+    public class AzureBlobStorageGatewayTest : IClassFixture<BaseTests>
     {
         private readonly IStorageGateway _storageGateway;
         private readonly string _containerName;
@@ -16,7 +16,7 @@ namespace TestProject.IntegrationTest.External
         private readonly Stream _fileStream;
         private readonly string _conn = "UseDevelopmentStorage=true";
 
-        public AzureBlobStorageGatewayTest(IntegrationTestsBase data)
+        public AzureBlobStorageGatewayTest(BaseTests data)
         {
             var configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>

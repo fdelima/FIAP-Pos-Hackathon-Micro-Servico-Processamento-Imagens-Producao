@@ -6,4 +6,3 @@ Feature: ControlarProcessamentoImagens
 Scenario: Controlar ProcessamentoImagem
 	Given Prepando um ProcessamentoImagem
 	And Produzir o ProcessamentoImagem
-	Then Encerra o trabalho

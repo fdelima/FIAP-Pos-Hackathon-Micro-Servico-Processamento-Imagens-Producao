@@ -13,9 +13,8 @@ using Xunit.Gherkin.Quick;
 namespace TestProject.ComponenteTest
 {
     [FeatureFile("./BDD/Features/ControlarProcessamentoImagens.feature")]
-    public class ProcessamentoImagemControllerTest : Feature, IClassFixture<ComponentTestsBase>
-    {
-        internal readonly WorkerTestFixture _workerTest;
+    public class ProcessamentoImagemControllerTest : Feature, IClassFixture<BaseTests>
+    {        
         private readonly IStorageGateway _storageGateway;
         private readonly IMessagerGateway _messagerGateway;
         private ProcessamentoImagemSendQueueModel _msgSendModel;
@@ -26,9 +25,8 @@ namespace TestProject.ComponenteTest
         /// <summary>
         /// Construtor da classe de teste.
         /// </summary>
-        public ProcessamentoImagemControllerTest(ComponentTestsBase data)
-        {
-            _workerTest = data._workerTest;
+        public ProcessamentoImagemControllerTest(BaseTests data)
+        {            
             var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string>
                 {
@@ -82,15 +80,6 @@ namespace TestProject.ComponenteTest
             Console.WriteLine($"blobClient != null :: {blobClient != null}");
 
             return blobClient != null;
-        }
-
-
-        [Then(@"Encerra o trabalho")]
-        public async Task KillWorker()
-        {
-            _workerTest.Dispose();
-
-            Assert.True(true);
-        }
+        }    
     }
 }
