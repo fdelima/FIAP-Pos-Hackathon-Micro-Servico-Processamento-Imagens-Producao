@@ -2,7 +2,7 @@
 {
     public class ComponentTestsBase : BaseTests
     {
-        private readonly WorkerTestFixture _workerTest;
+        internal readonly WorkerTestFixture _workerTest;
         private static int _tests = 0;
 
         public ComponentTestsBase()
