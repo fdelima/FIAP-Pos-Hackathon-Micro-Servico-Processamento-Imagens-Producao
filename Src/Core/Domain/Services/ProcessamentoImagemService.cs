@@ -171,16 +171,18 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
         {
             var localZipPath = $"/app/temp/{msgReceive.NomeArquivoZipDownload}";
 
-            using (FileStream zipFileStream = new FileStream(localZipPath, FileMode.Create))
-            {
-                ZipFile.CreateFromDirectory(tempPath, zipFileStream);
-                await _storageService.UploadFileAsync(Constants.BLOB_CONTAINER_NAME, msgReceive.NomeArquivoZipDownload, zipFileStream);
-            }
+            if (!_isTestProject)
+                using (FileStream zipFileStream = new FileStream(localZipPath, FileMode.Create))
+                {
+                    ZipFile.CreateFromDirectory(tempPath, zipFileStream);
+                    await _storageService.UploadFileAsync(Constants.BLOB_CONTAINER_NAME, msgReceive.NomeArquivoZipDownload, zipFileStream);
+                }
 
             if (Directory.Exists(tempPath))
                 Directory.Delete(tempPath, true);
 
-            File.Delete(localZipPath);
+            if (!_isTestProject)
+                File.Delete(localZipPath);
         }
     }
 }
