@@ -46,6 +46,7 @@ namespace TestProject.UnitTest.Domain
             // Act
             var result = await _service.ReceiverMessageInQueueAsync();
 
+            Console.WriteLine("Lima");
             Console.WriteLine(result);
 
             // Assert
