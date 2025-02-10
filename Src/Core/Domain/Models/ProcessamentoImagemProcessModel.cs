@@ -8,7 +8,7 @@
         public DateTime DataInicioProcessamento { get; set; }
         public DateTime? DataFimProcessamento { get; set; }
         public required string NomeArquivo { get; set; }
-        public int TamanhoArquivo { get; set; }
+        public long TamanhoArquivo { get; set; }
         public required string NomeArquivoZipDownload { get; set; }
 
     }
