@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
+  <PropertyGroup Label="Globals">
+    <ProjectVersion>2.1</ProjectVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <DockerPublishLocally>False</DockerPublishLocally>
+    <ProjectGuid>06e7e3e8-59f1-45f0-a9bd-fac3ab7ad0e4</ProjectGuid>
+    <DockerServiceName>FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.api</DockerServiceName>
+    <DockerComposeProjectName>fiap-pos-hackathon-micro-servico-processamento-imagens-producao-gurpo-71</DockerComposeProjectName>
+    <DockerComposeBaseFilePath>docker-compose-devenv</DockerComposeBaseFilePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="docker-compose-devenv.override.yml">
+      <DependentUpon>docker-compose-devenv.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose-devenv.yml" />
+    <None Include=".dockerignore" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Worker:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro

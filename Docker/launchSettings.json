@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Worker": "StartDebugging"
+      }
+    }
+  }
+}

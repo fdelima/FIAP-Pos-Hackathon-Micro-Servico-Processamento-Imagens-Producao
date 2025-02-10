@@ -1,0 +1,31 @@
+version: '3.4'
+
+volumes:
+  sql_data: {}
+  worker_data: {}
+
+services:
+  FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Worker:
+    image: ${DOCKER_REGISTRY-}fiapposhackathonmicroservicoprocessamentoimagensproducaoworker
+    # depends_on:
+      # - mongodb
+      # - azurite
+    build:
+      context: ../
+      dockerfile: Src/Worker/Dockerfile
+    volumes:
+      - worker_data:/app/temp
+  # mongodb:
+  #   image: mongo:latest
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - sql_data:/data/db
+  # azurite:
+  #   image: mcr.microsoft.com/azure-storage/azurite
+  #   ports:
+  #     - "10000:10000" # Porta para o Blob Storage
+  #     - "10001:10001" # Porta para o Queue Storage
+  #     - "10002:10002" # Porta para o Table Storage
+  #   volumes:
+  #     - azurite_data:/data

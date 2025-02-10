@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<AssemblyName>FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.$(MSBuildProjectName.Replace(" ", "_"))</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Somente para teste remover -->
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.36" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Application\Application.csproj" />
+		<ProjectReference Include="..\..\External\Infra\Infra.csproj" />
+	</ItemGroup>
+
+</Project>
