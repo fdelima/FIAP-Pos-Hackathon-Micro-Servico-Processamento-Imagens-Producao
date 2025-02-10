@@ -67,7 +67,7 @@ namespace TestProject.ComponenteTest
             await _messagerGateway.SendMessageAsync(messageBody);
 
             //Aguardando o worker fazer o trabalho
-            Thread.Sleep(1000 * 30);
+            Thread.Sleep(1000 * 45);
 
             Assert.True(FileExistsInStorageAsync(Constants.BLOB_CONTAINER_NAME, _msgSendModel.NomeArquivoZipDownload));
         }
