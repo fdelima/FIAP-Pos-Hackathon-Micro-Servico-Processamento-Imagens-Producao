@@ -47,7 +47,10 @@ namespace TestProject.UnitTest.Domain
             var result = await _service.ReceiverMessageInQueueAsync();
 
             Console.WriteLine("Lima");
-            Console.WriteLine(result);
+            foreach (var item in result.Errors)
+            {
+                Console.WriteLine(item);
+            }
 
             // Assert
             Assert.True(result.IsValid);
