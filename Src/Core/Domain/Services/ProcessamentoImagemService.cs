@@ -48,8 +48,7 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
                         NomeArquivoZipDownload = msgReceive.NomeArquivoZipDownload
                     };
 
-                    if (!_isTestProject)
-                        await ExecuteProcess(msgReceive);
+                    await ExecuteProcess(msgReceive);
 
                     //Fim do processamento
                     msg.DataFimProcessamento = DateTime.Now;
@@ -123,6 +122,10 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
                     CreateNoWindow = true,
                 }
             };
+
+            if (_isTestProject)
+                return 1.0;
+
             durationProcess.Start();
             var duration = double.Parse(durationProcess.StandardOutput.ReadToEnd());
             durationProcess.WaitForExit();
@@ -155,8 +158,12 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
                         CreateNoWindow = true,
                     }
                 };
-                ffmpegProcess.Start();
-                ffmpegProcess.WaitForExit();
+
+                if (!_isTestProject)
+                {
+                    ffmpegProcess.Start();
+                    ffmpegProcess.WaitForExit();
+                }
             }
         }
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<coverage version="1.0" date="2025-02-09_23-26-14" tag="">
+  <assembly name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Application">
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Application.Controllers.ProcessamentoImagemController" coveredlines="12" coverablelines="12" totallines="36" coveredbranches="0" totalbranches="0" coveredcodeelements="2" fullcoveredcodeelements="2" totalcodeelements="2" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Application.UseCases.ProcessamentoImagem.Handlers.ProcessamentoImagemReceiverMessageInQueueHandler" coveredlines="7" coverablelines="7" totallines="22" coveredbranches="0" totalbranches="0" coveredcodeelements="2" fullcoveredcodeelements="2" totalcodeelements="2" />
+  </assembly>
+  <assembly name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain">
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Extensions.StringExtension" coveredlines="12" coverablelines="12" totallines="24" coveredbranches="3" totalbranches="6" coveredcodeelements="2" fullcoveredcodeelements="1" totalcodeelements="2" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models.MessageModel" coveredlines="3" coverablelines="3" totallines="9" coveredbranches="0" totalbranches="0" coveredcodeelements="3" fullcoveredcodeelements="3" totalcodeelements="3" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models.ModelResult" coveredlines="23" coverablelines="31" totallines="109" coveredbranches="1" totalbranches="2" coveredcodeelements="11" fullcoveredcodeelements="11" totalcodeelements="14" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models.ModelResultFactory" coveredlines="54" coverablelines="54" totallines="118" coveredbranches="3" totalbranches="4" coveredcodeelements="11" fullcoveredcodeelements="11" totalcodeelements="11" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models.ProcessamentoImagemProcessModel" coveredlines="7" coverablelines="7" totallines="15" coveredbranches="0" totalbranches="0" coveredcodeelements="7" fullcoveredcodeelements="7" totalcodeelements="7" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models.ProcessamentoImagemSendQueueModel" coveredlines="6" coverablelines="6" totallines="12" coveredbranches="0" totalbranches="0" coveredcodeelements="6" fullcoveredcodeelements="6" totalcodeelements="6" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models.ProcessamentoImagemUploadModel" coveredlines="3" coverablelines="3" totallines="13" coveredbranches="0" totalbranches="0" coveredcodeelements="3" fullcoveredcodeelements="3" totalcodeelements="3" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Services.AzureBlobStorageService" coveredlines="13" coverablelines="13" totallines="29" coveredbranches="0" totalbranches="0" coveredcodeelements="4" fullcoveredcodeelements="4" totalcodeelements="4" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Services.MessageService" coveredlines="13" coverablelines="13" totallines="30" coveredbranches="0" totalbranches="0" coveredcodeelements="4" fullcoveredcodeelements="4" totalcodeelements="4" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Services.ProcessamentoImagemService" coveredlines="101" coverablelines="110" totallines="186" coveredbranches="13" totalbranches="18" coveredcodeelements="8" fullcoveredcodeelements="1" totalcodeelements="8" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Validator.ProcessamentoImagemUploadModelValidator" coveredlines="8" coverablelines="8" totallines="24" coveredbranches="0" totalbranches="0" coveredcodeelements="1" fullcoveredcodeelements="1" totalcodeelements="1" />
+  </assembly>
+  <assembly name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Infra">
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Infra.Gateways.AzureBlobStorageGateway" coveredlines="22" coverablelines="22" totallines="49" coveredbranches="1" totalbranches="2" coveredcodeelements="4" fullcoveredcodeelements="1" totalcodeelements="4" />
+    <class name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Infra.Gateways.AzureQueueStorageGateway" coveredlines="24" coverablelines="24" totallines="50" coveredbranches="2" totalbranches="4" coveredcodeelements="4" fullcoveredcodeelements="2" totalcodeelements="4" />
+  </assembly>
+  <assembly name="FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Ioc" />
+</coverage>

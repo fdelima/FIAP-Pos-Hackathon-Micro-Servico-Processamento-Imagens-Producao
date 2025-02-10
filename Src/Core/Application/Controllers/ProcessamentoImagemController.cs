@@ -25,24 +25,6 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Applic
         }
 
         /// <summary>
-        /// Valida a entidade
-        /// </summary>
-        /// <param name="entity">Entidade</param>
-        public async Task<ModelResult> ValidateAsync(ProcessamentoImagemUploadModel entity)
-        {
-            ModelResult ValidatorResult = new ModelResult(entity);
-
-            FluentValidation.Results.ValidationResult validations = _uploadValidator.Validate(entity);
-            if (!validations.IsValid)
-            {
-                ValidatorResult.AddValidations(validations);
-                return ValidatorResult;
-            }
-
-            return await Task.FromResult(ValidatorResult);
-        }
-
-        /// <summary>
         /// Lê as mensagens dos arquivos processados.
         /// </summary>
         public async Task<ModelResult> ReceiverMessageInQueueAsync()

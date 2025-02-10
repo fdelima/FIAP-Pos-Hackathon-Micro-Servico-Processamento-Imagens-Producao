@@ -1,4 +1,5 @@
 ﻿using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Extensions;
+using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Messages;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
@@ -8,9 +9,21 @@ namespace TestProject.UnitTest.Domain
 {
     public partial class DomainTest
     {
+        [Fact]
+        public void StringExtensionIsBlankTest()
+        {
+            //Arrange
+            const string valor = " ";
+            const bool expectedResult = true;
+            //Act
+            var result = StringExtension.IsBlank(valor);
+
+            //Assert
+            Assert.Equal(expectedResult, result);
+        }
 
         [Fact]
-        public void StringExtensionTest()
+        public void StringExtensionToSnakeCaseTest()
         {
             //Arrange
             const string valor = "ToSnakeCaseTest";
@@ -22,6 +35,37 @@ namespace TestProject.UnitTest.Domain
             Assert.Equal(expectedResult, result);
         }
 
+        [Fact]
+        public void ModelResultFactoryTest()
+        {
+            //Arrange
+            var obj = new MessageModel
+            {
+                MessageId = Guid.NewGuid().ToString(),
+                MessageText = "Test",
+                PopReceipt = Guid.NewGuid().ToString()
+            };
+
+            //Act / Assert
+            var resut1 = ModelResultFactory.InsertSucessResult<MessageModel>(obj);
+            Assert.Equal(resut1.Messages.First(), BusinessMessages.InsertSucess<MessageModel>());
+
+            var resut2 = ModelResultFactory.UpdateSucessResult<MessageModel>(obj);
+            Assert.Equal(resut2.Messages.First(), BusinessMessages.UpdateSucess<MessageModel>());
+            
+            var resut3 = ModelResultFactory.DeleteSucessResult<MessageModel>(obj);
+            Assert.Equal(resut3.Messages.First(), BusinessMessages.DeleteSucess<MessageModel>());
+           
+            var resut4 = ModelResultFactory.DuplicatedResult<MessageModel>();
+            Assert.Equal(resut4.Errors.First(), BusinessMessages.DuplicatedError<MessageModel>());
+           
+            var resut5 = ModelResultFactory.NotFoundResult<MessageModel>();
+            Assert.Equal(resut5.Errors.First(), BusinessMessages.NotFoundError<MessageModel>());
+           
+            var resut6 = ModelResultFactory.DeleteFailResult<MessageModel>();
+            Assert.Equal(resut6.Messages.First(), ErrorMessages.DeleteDatabaseError<MessageModel>());
+
+        }
 
         [Fact]
         public void NoneResultTest()
@@ -43,6 +87,8 @@ namespace TestProject.UnitTest.Domain
 
             //Act
             var resut = ModelResultFactory.Message(msg);
+            resut.AddMessage("addMessage");
+            resut.AddMessage(new List<string> { "outra message" });
 
             //Assert
             Assert.Contains(msg, resut.ListMessages());
@@ -56,6 +102,8 @@ namespace TestProject.UnitTest.Domain
 
             //Act
             var resut = ModelResultFactory.Error(msg);
+            resut.AddError("Erro");
+            resut.AddError(new List<string> { "outro erro" });
 
             //Assert
             Assert.Contains(msg, resut.ListErrors());

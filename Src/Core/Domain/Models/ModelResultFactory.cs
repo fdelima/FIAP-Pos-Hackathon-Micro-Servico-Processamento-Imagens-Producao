@@ -107,7 +107,7 @@ namespace FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain
             return result;
         }
 
-        internal static ModelResult DeleteFailResult<T>(params string[] errors)
+        public static ModelResult DeleteFailResult<T>(params string[] errors)
         {
             ModelResult result = new ModelResult();
             result.AddMessage(ErrorMessages.DeleteDatabaseError<T>());
