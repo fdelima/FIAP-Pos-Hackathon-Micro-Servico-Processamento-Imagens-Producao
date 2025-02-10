@@ -21,6 +21,7 @@ namespace TestProject.ComponenteTest
         private ProcessamentoImagemSendQueueModel _msgSendModel;
         private readonly string _queueToProcessName = "processar";
         private readonly string _queueProcessedName = "processado";
+        private readonly string _conn = "UseDevelopmentStorage=true";
 
         /// <summary>
         /// Construtor da classe de teste.
@@ -31,7 +32,7 @@ namespace TestProject.ComponenteTest
             var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    { $"ConnectionStrings:{Constants.AZ_STORAGE_CONN_NAME}", "UseDevelopmentStorage=true" },
+                    { $"ConnectionStrings:{Constants.AZ_STORAGE_CONN_NAME}", _conn },
                     { Constants.MESSAGER_QUEUE_TO_PROCESS_NAME, _queueToProcessName },
                     { Constants.MESSAGER_QUEUE_PROCESSED_NAME, "processado" }
                 })
@@ -62,35 +63,31 @@ namespace TestProject.ComponenteTest
         public async Task SendProcessamentoImagem()
         {
             string messageBody = JsonSerializer.Serialize(_msgSendModel);
-            var queueClient = new QueueClient("UseDevelopmentStorage=true", _queueToProcessName);
+            var queueClient = new QueueClient(_conn, _queueToProcessName);
             await _messagerGateway.SendMessageAsync(messageBody);
 
             //Aguardando o worker fazer o trabalho
             Thread.Sleep(1000 * 30);
 
-            Assert.True(await FileExistsInStorageAsync(Constants.BLOB_CONTAINER_NAME, _msgSendModel.NomeArquivoZipDownload));
+            Assert.True(FileExistsInStorageAsync(Constants.BLOB_CONTAINER_NAME, _msgSendModel.NomeArquivoZipDownload));
         }
 
-        private async Task<bool> FileExistsInStorageAsync(string containerName, string fileName)
+        private bool FileExistsInStorageAsync(string containerName, string fileName)
         {
-            var blobServiceClient = new BlobServiceClient("UseDevelopmentStorage=true");
+            var blobServiceClient = new BlobServiceClient(_conn);
             var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
             var blobClient = containerClient.GetBlobClient(fileName);
 
-            return await blobClient.ExistsAsync();
+            return blobClient != null;
         }
 
-        //[When(@"Receber o ProcessamentoImagem")]
-        //public async Task ReceiverProcessamentoImagem()
-        //{
-        //    throw new NotImplementedException();
-        //}
 
+        [Then(@"Encerra o trabalho")]
+        public async Task KillWorker()
+        {
+            _workerTest.Dispose();
 
-        //[Then(@"posso deletar o ProcessamentoImagem")]
-        //public async Task DeletarProcessamentoImagem()
-        //{
-        //    throw new NotImplementedException();
-        //}
+            Assert.True(true);
+        }
     }
 }

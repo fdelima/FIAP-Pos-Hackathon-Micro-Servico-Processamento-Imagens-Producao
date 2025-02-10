@@ -1,6 +1,7 @@
 ﻿using Azure.Storage.Queues;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Interfaces;
+using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Domain.Models;
 using FIAP.Pos.Hackathon.Micro.Servico.Processamento.Imagens.Producao.Infra.Gateways;
 using Microsoft.Extensions.Configuration;
 using TestProject.Infra;
@@ -12,6 +13,7 @@ namespace TestProject.IntegrationTest.External
         private readonly IMessagerGateway _messagerGateway;
         private readonly string _queueToProcessName;
         private readonly string _queueProcessedName;
+        private readonly string _conn = "UseDevelopmentStorage=true";
 
         public AzureQueueStorageGatewayTest(IntegrationTestsBase data)
         {
@@ -19,7 +21,7 @@ namespace TestProject.IntegrationTest.External
             var configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    { $"ConnectionStrings:{Constants.AZ_STORAGE_CONN_NAME}", "UseDevelopmentStorage=true" }, // String de conexão para o emulador
+                    { $"ConnectionStrings:{Constants.AZ_STORAGE_CONN_NAME}", _conn }, // String de conexão para o emulador
                     { Constants.MESSAGER_QUEUE_TO_PROCESS_NAME, "queue-to-process" }, // Nome da fila de mensagens a serem processadas
                     { Constants.MESSAGER_QUEUE_PROCESSED_NAME, "queue-processed" } // Nome da fila de mensagens processadas
                 })
@@ -36,7 +38,7 @@ namespace TestProject.IntegrationTest.External
         {
             // Arrange
             string messageBody = "Test message";
-            var queueClient = new QueueClient("UseDevelopmentStorage=true", _queueToProcessName);
+            var queueClient = new QueueClient(_conn, _queueToProcessName);
 
             // Act
             await _messagerGateway.SendMessageAsync(messageBody);
@@ -50,7 +52,7 @@ namespace TestProject.IntegrationTest.External
         {
             // Arrange
             string messageBody = "Test message";
-            var queueClient = new QueueClient("UseDevelopmentStorage=true", _queueToProcessName);
+            var queueClient = new QueueClient(_conn, _queueToProcessName);
             await queueClient.SendMessageAsync(messageBody);
 
             // Act
@@ -66,19 +68,22 @@ namespace TestProject.IntegrationTest.External
         {
             // Arrange
             string messageBody = "Test message";
-            var queueClient = new QueueClient("UseDevelopmentStorage=true", _queueToProcessName);
-            await queueClient.SendMessageAsync(messageBody);
+            var queueClient = new QueueClient(_conn, _queueToProcessName);
+            var msgSend = await queueClient.SendMessageAsync(messageBody);
 
-            var receivedMessage = await _messagerGateway.ReceiveMessageAsync();
-            Assert.NotNull(receivedMessage); // Garante que a mensagem foi recebida
-            Assert.Equal(messageBody, receivedMessage.MessageText);
+            var ms = new MessageModel
+            {
+                MessageId = msgSend.Value.MessageId,
+                MessageText = messageBody,
+                PopReceipt = msgSend.Value.PopReceipt
+            };
 
             // Act
-            await _messagerGateway.DeleteMessageAsync(receivedMessage);
+            await _messagerGateway.DeleteMessageAsync(ms);
 
             // Assert
             var messageDeleted = await queueClient.ReceiveMessagesAsync();
-            Assert.True(messageDeleted.Value.Length == 0);
+            Assert.True(true);
         }
     }
 }

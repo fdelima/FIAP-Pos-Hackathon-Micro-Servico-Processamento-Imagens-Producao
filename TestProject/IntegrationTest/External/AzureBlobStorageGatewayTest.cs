@@ -14,13 +14,14 @@ namespace TestProject.IntegrationTest.External
         private readonly string _fileName;
         private readonly string _localFilePath;
         private readonly Stream _fileStream;
+        private readonly string _conn = "UseDevelopmentStorage=true";
 
         public AzureBlobStorageGatewayTest(IntegrationTestsBase data)
         {
             var configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    { $"ConnectionStrings:{Constants.AZ_STORAGE_CONN_NAME}", "UseDevelopmentStorage=true" },
+                    { $"ConnectionStrings:{Constants.AZ_STORAGE_CONN_NAME}", _conn },
                 })
                 .Build();
 
@@ -71,7 +72,7 @@ namespace TestProject.IntegrationTest.External
 
         private async Task<bool> FileExistsInStorageAsync(string containerName, string fileName)
         {
-            var blobServiceClient = new BlobServiceClient("UseDevelopmentStorage=true");
+            var blobServiceClient = new BlobServiceClient(_conn);
             var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
             var blobClient = containerClient.GetBlobClient(fileName);
 
